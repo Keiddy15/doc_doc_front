@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'package:doc_doc_front/app.dart';
+import 'package:doc_doc_front/providers/auth_provider.dart';
 import 'package:doc_doc_front/views/register_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:another_flushbar/flushbar.dart';
 
 class FormLoginWidget extends StatefulWidget {
-  FormLoginWidget({Key? key}) : super(key: key);
+  const FormLoginWidget({Key? key}) : super(key: key);
 
   @override
   State<FormLoginWidget> createState() => _FormLoginWidgetState();
@@ -89,7 +94,16 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
     );
   }
 
-  Future login() async {}
+  Future login() async {
+    var service = AuthProvider();
+    var login = await service.login(email.text, password.text);
+    if (login.statusCode == 200) {
+      final response = json.decode(login.body);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('token', response['token']);
+    }
+    return login;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +142,33 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                       height: 50.0,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {}
+                          if (_formKey.currentState!.validate()) {
+                            login().then((value) {
+                              final response = json.decode(value.body);
+                              if (value.statusCode == 200) {
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => const MyApp()),
+                                    (Route<dynamic> route) => false);
+                              } else {
+                                Flushbar(
+                                  message: response['message'],
+                                  icon: const Icon(
+                                    FontAwesomeIcons.circleExclamation,
+                                    size: 28.0,
+                                    color: Color(0xFFF42413),
+                                  ),
+                                  duration: const Duration(seconds: 2),
+                                  leftBarIndicatorColor:
+                                      const Color(0xFFF42413),
+                                  messageColor: Colors.black,
+                                  backgroundColor: Colors.white,
+                                  flushbarPosition: FlushbarPosition.TOP,
+                                  margin: const EdgeInsets.all(20.0),
+                                ).show(context);
+                              }
+                            });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF00C6C1),

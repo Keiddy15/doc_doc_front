@@ -1,3 +1,8 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:another_flushbar/flushbar.dart';
+import 'package:doc_doc_front/providers/auth_provider.dart';
 import 'package:doc_doc_front/views/login_view.dart';
 import 'package:doc_doc_front/views/register_view.dart';
 import 'package:flutter/material.dart';
@@ -212,15 +217,20 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
       enableSuggestions: false,
       autocorrect: false,
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'This field is required';
+        if (value!.isEmpty || value != password.text) {
+          return 'Passwords do not match';
         }
         return null;
       },
     );
   }
 
-  Future signUp() async {}
+  Future register() async {
+    var service = AuthProvider();
+    var response = await service.register(
+        email.text, password.text, age.text, fullName.text);
+    return response;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +264,52 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
                       height: 50.0,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (_formKey.currentState!.validate()) {}
+                          if (_formKey.currentState!.validate()) {
+                            register().then((value) {
+                              final response = json.decode(value.body);
+                              if (value.statusCode == 200) {
+                                Flushbar(
+                                  message:
+                                      'Register successfully, please check your email',
+                                  icon: const Icon(
+                                    FontAwesomeIcons.circleCheck,
+                                    size: 28.0,
+                                    color: Color(0xFF007B78),
+                                  ),
+                                  duration: const Duration(seconds: 2),
+                                  leftBarIndicatorColor:
+                                      const Color(0xFF007B78),
+                                  messageColor: Colors.black,
+                                  backgroundColor: Colors.white,
+                                  flushbarPosition: FlushbarPosition.TOP,
+                                  margin: const EdgeInsets.all(20.0),
+                                ).show(context);
+                                Timer(const Duration(seconds: 8), () {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginView()),
+                                      (Route<dynamic> route) => false);
+                                });
+                              } else {
+                                Flushbar(
+                                  message: response['message'],
+                                  icon: const Icon(
+                                    FontAwesomeIcons.circleExclamation,
+                                    size: 28.0,
+                                    color: Color(0xFFF42413),
+                                  ),
+                                  duration: const Duration(seconds: 2),
+                                  leftBarIndicatorColor:
+                                      const Color(0xFFF42413),
+                                  messageColor: Colors.black,
+                                  backgroundColor: Colors.white,
+                                  flushbarPosition: FlushbarPosition.TOP,
+                                  margin: const EdgeInsets.all(20.0),
+                                ).show(context);
+                              }
+                            });
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF00C6C1),

@@ -10,6 +10,24 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  @override
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Doc Doc',
+        home: const HomeBody());
+  }
+}
+
+class HomeBody extends StatefulWidget {
+  const HomeBody({Key? key}) : super(key: key);
+
+  @override
+  State<HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<HomeBody> {
   Widget authButtons(text) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40.0),

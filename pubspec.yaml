@@ -40,6 +40,12 @@ dependencies:
   another_flushbar: ^1.10.28
   font_awesome_flutter: ^10.2.1
   flutter_material_pickers: ^3.2.0
+  http: ^0.13.5
+  firebase_core: ^2.1.0
+  firebase_auth: ^4.0.2
+  cloud_firestore: ^4.0.2
+  firebase_storage: ^11.0.2
+  provider: ^6.0.4
 
 dev_dependencies:
   flutter_test:
