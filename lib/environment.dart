@@ -1,3 +1,3 @@
 class Environment {
-  static String get apiUrl => 'http://localhost:3000/';
+  static String get apiUrl => 'https://guarded-waters-96869.herokuapp.com/';
 }
