@@ -270,7 +270,7 @@ class _FormRegisterWidgetState extends State<FormRegisterWidget> {
                               if (value.statusCode == 200) {
                                 Flushbar(
                                   message:
-                                      'Register successfully, please check your email',
+                                      'Register successfully',
                                   icon: const Icon(
                                     FontAwesomeIcons.circleCheck,
                                     size: 28.0,

@@ -13,10 +13,8 @@ class _HomeViewState extends State<HomeView> {
   @override
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Doc Doc',
-        home: const HomeBody());
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false, home: HomeBody());
   }
 }
 
@@ -67,6 +65,7 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF00CEC9),
+      extendBody: true,
       body: Column(children: <Widget>[
         const SizedBox(height: 80),
         Align(

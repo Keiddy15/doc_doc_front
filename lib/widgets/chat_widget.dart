@@ -29,7 +29,6 @@ class ChatWidget extends StatefulWidget {
 class _ChatWidgetState extends State<ChatWidget> {
   final ScrollController scrollController = ScrollController();
   final TextEditingController textEditingController = TextEditingController();
-  final FocusNode focusNode = FocusNode();
   String? currentUserId;
   List<QueryDocumentSnapshot> listMessages = [];
 
@@ -46,7 +45,6 @@ class _ChatWidgetState extends State<ChatWidget> {
   void initState() {
     super.initState();
     chatProvider = context.read<ChatProvider>();
-    focusNode.addListener(onFocusChanged);
     scrollController.addListener(_scrollListener);
     readLocal();
   }
@@ -56,14 +54,6 @@ class _ChatWidgetState extends State<ChatWidget> {
         !scrollController.position.outOfRange) {
       setState(() {
         _limit += _limitIncrement;
-      });
-    }
-  }
-
-  void onFocusChanged() {
-    if (focusNode.hasFocus) {
-      setState(() {
-        isShowSticker = false;
       });
     }
   }
@@ -79,13 +69,6 @@ class _ChatWidgetState extends State<ChatWidget> {
     } else {
       groupChatId = '${widget.peerId} - $currentId';
     }
-  }
-
-  void getSticker() {
-    focusNode.unfocus();
-    setState(() {
-      isShowSticker = !isShowSticker;
-    });
   }
 
   void onSendMessage(String content) {
@@ -356,7 +339,6 @@ class _ChatWidgetState extends State<ChatWidget> {
                   borderRadius: BorderRadius.circular(20.0),
                   elevation: 20.0,
                   child: TextField(
-                    focusNode: focusNode,
                     textInputAction: TextInputAction.send,
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.sentences,

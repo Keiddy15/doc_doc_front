@@ -42,29 +42,30 @@ class _MyAppState extends State<MyApp> {
       const UserView(),
     ];
     return MultiProvider(
-      providers: [
-        Provider<ChatProvider>(
-            create: (_) => ChatProvider(
-                firebaseStorage: firebaseStorage,
-                firebaseFirestore: firebaseFirestore))
-      ],child: MaterialApp(
-      color: const Color(0xFF00CEC9),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: const Color(0xFF00CEC9),
-        extendBody: true,
-        body: PersistentTabs(
-          currentTabIndex: _currentIndex,
-          screenWidgets: pages,
-        ),
-        bottomNavigationBar: SafeArea(
-          child: BottomNavigationComponent(
-            index: _currentIndex,
-            onTapFunction: setCurrentIndex,
+        providers: [
+          Provider<ChatProvider>(
+              create: (_) => ChatProvider(
+                  firebaseStorage: firebaseStorage,
+                  firebaseFirestore: firebaseFirestore))
+        ],
+        child: MaterialApp(
+          color: const Color(0xFF00CEC9),
+          debugShowCheckedModeBanner: false,
+          home: Scaffold(
+            backgroundColor: const Color(0xFF00CEC9),
+            extendBody: true,
+            body: PersistentTabs(
+              currentTabIndex: _currentIndex,
+              screenWidgets: pages,
+            ),
+            bottomNavigationBar: SafeArea(
+              child: BottomNavigationComponent(
+                index: _currentIndex,
+                onTapFunction: setCurrentIndex,
+              ),
+            ),
           ),
-        ),
-      ),
-      themeMode: ThemeMode.dark,
-    ));
+          themeMode: ThemeMode.dark,
+        ));
   }
 }

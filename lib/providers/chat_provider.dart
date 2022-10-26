@@ -12,14 +12,6 @@ class ChatProvider {
   ChatProvider(
       {required this.firebaseStorage, required this.firebaseFirestore});
 
-  Future<void> updateFirestoreData(
-      String collectionPath, String docPath, Map<String, dynamic> dataUpdate) {
-    return firebaseFirestore
-        .collection(collectionPath)
-        .doc(docPath)
-        .update(dataUpdate);
-  }
-
   Stream<QuerySnapshot> getChatMessage(String groupChatId, int limit) {
     return firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
