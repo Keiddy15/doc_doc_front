@@ -139,6 +139,7 @@ class _FormUserWidgetState extends State<FormUserWidget> {
       var user = UserModel.fromJson(jsonDecode['user']);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('currentUserId', user.id.toString());
+      prefs.setString('userPhotoUrl', user.photoUrl.toString());
       email.text = user.email;
       fullName.text = user.fullName;
       age.text = user.age.toString();
@@ -185,8 +186,7 @@ class _FormUserWidgetState extends State<FormUserWidget> {
                               final response = json.decode(value.body);
                               if (value.statusCode == 200) {
                                 Flushbar(
-                                  message:
-                                      'User updated',
+                                  message: 'User updated',
                                   icon: const Icon(
                                     FontAwesomeIcons.circleCheck,
                                     size: 28.0,

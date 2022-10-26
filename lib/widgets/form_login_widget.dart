@@ -148,7 +148,7 @@ class _FormLoginWidgetState extends State<FormLoginWidget> {
                               if (value.statusCode == 200) {
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
-                                        builder: (context) => const MyApp()),
+                                        builder: (context) =>  MyApp()),
                                     (Route<dynamic> route) => false);
                               } else {
                                 Flushbar(

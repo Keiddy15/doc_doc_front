@@ -18,7 +18,7 @@ class BottomNavigationComponent extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
             color: Colors.white,
             border: Border.all(color: Colors.white)),
-        margin: EdgeInsets.symmetric(horizontal: 5.0),
+        margin: EdgeInsets.symmetric(horizontal: 25.0),
         child: ClipRRect(
             borderRadius: BorderRadius.circular(25.0),
             child: BottomNavigationBar(

@@ -12,5 +12,5 @@ Future<void> main() async {
   );
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var token = prefs.getString('token');
-  runApp(token == null ? const HomeView() : const MyApp());
+  runApp(token == null ? const HomeView() : MyApp());
 }
