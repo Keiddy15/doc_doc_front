@@ -41,7 +41,8 @@ class UserProvider {
     final response = await http
         .get(Uri.parse('${Environment.apiUrl}user/getAll'), headers: headers);
     final jsonDecode = json.decode(response.body);
-    for (var user in jsonDecode['user']) {
+    final arrayUsers = jsonDecode['users'] == null ? [] : jsonDecode['users'] as List;
+    for (var user in arrayUsers!) {
       users.add(UserModel.fromJson(user));
     }
     return users;
