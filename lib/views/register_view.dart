@@ -19,13 +19,13 @@ class _RegisterViewState extends State<RegisterView> {
           backgroundColor: const Color(0xFF00CEC9),
           titleSpacing: 0.0,
         ),
-        resizeToAvoidBottomInset: false,
         extendBody: true,
         backgroundColor: Colors.transparent,
         body: GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
             child: const SizedBox.expand(
                 child: Material(
-                    child: SingleChildScrollView(child: FormRegisterWidget())))));
+                    child:
+                        SingleChildScrollView(child: FormRegisterWidget())))));
   }
 }
